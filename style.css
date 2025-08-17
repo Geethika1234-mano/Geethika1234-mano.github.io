@@ -61,9 +61,10 @@ nav .socials a {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding-top: 6rem;
+    background: linear-gradient(135deg, var(--bg-color) 0%, var(--card-bg) 100%)
+      padding-top: 6rem;;
   padding-bottom: 4rem;
-  background: url('header.png') center/cover no-repeat;
+  
 }
 
 .badges {
