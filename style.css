@@ -85,8 +85,10 @@ nav .socials a {
 
 .hero h1 {
   font-size: 2.5rem;
+      animation: fadeInDown 1s ease-out;
   margin: 1rem 0 0.5rem;
 }
+    
 
 .hero h2 {
   font-size: 1.5rem;
@@ -118,9 +120,11 @@ nav .socials a {
 
 .stats {
   display: flex;
+      justify-content: center;
   gap: 3rem;
   margin-top: 2rem;
 }
+    j
 
 .stat h3 {
   font-size: 2rem;
@@ -241,4 +245,16 @@ footer {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
