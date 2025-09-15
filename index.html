@@ -1,82 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Geethika | Portfolio</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --bg: #0a192f;
+      --text: #ccd6f6;
+      --muted: #a8b2d1;
+      --accent: #64ffda;
+      --card: #112240;
+      --maxw: 1100px;
+      --radius: 14px;
+      --space-1: .25rem;
+      --space-2: .5rem;
+      --space-3: .75rem;
+      --space-4: 1rem;
+      --space-5: 1.5rem;
+      --space-6: 2rem;
+      --space-7: 3rem;
+      --space-8: 4rem;
+      --shadow: 0 10px 30px -10px rgba(2,12,27,.7);
+      scroll-behavior: smooth;
+    }
+
+    /* Base */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Layout helpers */
+    .container { max-width: var(--maxw); margin-inline: auto; padding-inline: var(--space-6); }
+    .section { padding-block: var(--space-8); scroll-margin-top: 80px; }
+    .section + .section { border-top: 1px solid rgba(100,255,218,.1); }
+    .stack { display: grid; gap: var(--space-5); }
+    .grid { display: grid; gap: var(--space-6); }
+
+    /* Nav */
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: saturate(180%) blur(8px);
+      background: rgba(10,25,47,.8);
+      border-bottom: 1px solid rgba(100,255,218,.08);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding-block: .85rem; }
+    .brand { color: var(--accent); font-weight: 800; letter-spacing: .5px; font-size: 1.15rem; }
+    .nav-menu { display: flex; gap: var(--space-5); list-style: none; margin: 0; padding: 0; }
+    .nav-menu a { color: var(--text); opacity: .9; }
+    .nav-cta { display: flex; gap: var(--space-3); align-items: center; }
+
+    /* Hero */
+    header.hero {
+      background: linear-gradient(135deg, var(--bg) 0%, var(--card) 100%);
+      padding-block: calc(var(--space-8) + 2rem);
+    }
+    .badges { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+    .badge { border: 1px solid var(--accent); color: var(--accent); border-radius: 999px; padding: .35rem .65rem; font-size: .75rem; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; }
+    .hero h1 { font-size: clamp(2rem, 4vw, 3rem); margin: var(--space-4) 0 var(--space-2); animation: fadeInDown .9s ease both; }
+    .hero h2 { font-size: clamp(1.2rem, 2.4vw, 1.6rem); color: var(--accent); margin: 0 0 var(--space-5); }
+    .hero p { max-width: 68ch; color: var(--muted); margin: 0 0 var(--space-5); }
+    .cta { display: inline-block; background: var(--accent); color: #062c2d; padding: .7rem 1.1rem; border-radius: 10px; font-weight: 700; box-shadow: var(--shadow); transform: translateY(0); transition: transform .2s ease; }
+    .cta:hover { transform: translateY(-2px); }
+
+    .stats { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--space-6); margin-top: var(--space-6); max-width: 420px; }
+    .stat { text-align: center; }
+    .stat h3 { margin: 0; font-size: 2rem; color: var(--accent); }
+    .stat p { margin: .25rem 0 0; text-transform: uppercase; letter-spacing: 1.8px; font-size: .8rem; color: var(--muted); }
+
+    /* Skills ribbon */
+    .skills { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-6); }
+    .skill { width: 46px; height: 46px; border-radius: 999px; background: var(--card); color: var(--accent); display: grid; place-items: center; font-weight: 800; box-shadow: var(--shadow); transition: transform .2s ease; }
+    .skill:hover { transform: translateY(-4px); }
+
+    /* Cards */
+    .card { background: var(--card); border-radius: var(--radius); padding: var(--space-6); box-shadow: var(--shadow); }
+
+    /* Works grid */
+    .projects { grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); }
+    .project h3 { margin-top: 0; color: var(--accent); }
+    .project p { color: var(--muted); }
+
+    /* Contact */
+    .contact-list { display: flex; gap: var(--space-6); justify-content: center; flex-wrap: wrap; padding: 0; list-style: none; }
+
+    /* Footer */
+    footer { background: var(--card); padding-block: var(--space-5); text-align: center; color: var(--muted); }
+
+    /* Utilities */
+    .center { text-align: center; }
+    .mb-1 { margin-bottom: var(--space-4); }
+    .mb-2 { margin-bottom: var(--space-6); }
+    .mb-3 { margin-bottom: var(--space-7); }
+
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Mobile nav (simple) */
+    @media (max-width: 780px) {
+      .nav-menu { display: none; }
+      .nav-cta { display: none; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .container { padding-inline: var(--space-4); }
+    }
+  </style>
 </head>
 <body>
+  <!-- Nav -->
   <nav>
-    <div class="brand">Geethika</div>
-    <ul class="nav-menu">
-      <li><a href="#service">Service</a></li>
-      <li><a href="#works">Works</a></li>
-      <li><a href="#notes">Notes</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="socials">
-      <a href="https://linkedin.com" target="_blank">LinkedIn</a>
-      <a href="https://github.com/Geethika1234-mano" target="_blank">GitHub</a>
-      <a href="mailto:" target="_blank">Email</a>
+    <div class="container nav-inner">
+      <a href="#top" class="brand">Geethika</a>
+      <ul class="nav-menu">
+        <li><a href="#service">Services</a></li>
+        <li><a href="#works">Works</a></li>
+        <li><a href="#notes">Notes</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="https://linkedin.com" target="_blank" rel="noreferrer noopener">LinkedIn</a>
+        <a href="https://github.com/Geethika1234-mano" target="_blank" rel="noreferrer noopener">GitHub</a>
+        <a href="mailto:geethikasew97@gmail.com">Email</a>
+      </div>
     </div>
   </nav>
-  <header class="hero">
-    <div class="hero-content">
+
+  <!-- Hero -->
+  <header id="top" class="hero">
+    <div class="container stack center">
       <div class="badges">
         <span class="badge">Full‑Stack Developer</span>
-        <span class="badge">AI Enthusiast</span>
+        <span class="badge">AI Engineer</span>
       </div>
       <h1>Hi, I'm Geethika</h1>
       <h2>I build intelligent web applications</h2>
       <p>I’m a passionate software developer from Sri Lanka specializing in full‑stack development and artificial intelligence. I hold a BSc in Computer Science with a 4.0 GPA.</p>
-      <a href="#contact" class="cta">Let's Chat!</a>
+      <div>
+        <a class="cta" href="#contact">Let's Chat</a>
+      </div>
       <div class="stats">
-        <div class="stat">
-          <h3>2+</h3>
-          <p>Years Experience</p>
-        </div>
-        <div class="stat">
-          <h3>10+</h3>
-          <p>Projects Completed</p>
-        </div>
+        <div class="stat"><h3>2+</h3><p>Years Experience</p></div>
+        <div class="stat"><h3>10+</h3><p>Projects</p></div>
+      </div>
+      <div class="skills">
+        <span class="skill">JS</span>
+        <span class="skill">Py</span>
+        <span class="skill">React</span>
+        <span class="skill">API</span>
+        <span class="skill">SQL</span>
       </div>
     </div>
-    <div class="skills-container">
-      <span class="skill-icon">JS</span>
-      <span class="skill-icon">Py</span>
-      <span class="skill-icon">React</span>
-      <span class="skill-icon">API</span>
-      <span class="skill-icon">SQL</span>
-    </div>
   </header>
-  <section id="service">
-    <h2>Services</h2>
-    <p>I design and build responsive web applications and AI‑powered solutions.</p>
-  </section>
-  <section id="works">
-    <h2>Works</h2>
-    <div class="project">
-      <h3>AI Resume Screener</h3>
-      <p>An AI tool that analyzes resumes and matches candidates to job descriptions using NLP and embeddings. Built with Python, FastAPI, GPT‑4, LangChain, and MongoDB.</p>
-      <a href="https://github.com/Geethika1234-mano/ai-resume-screener" target="_blank">View Project</a>
+
+  <!-- Services -->
+  <section id="service" class="section">
+    <div class="container">
+      <h2 class="center mb-2">Services</h2>
+      <p class="center mb-3">I design and build responsive web applications and AI‑powered solutions.</p>
+      <div class="grid projects">
+        <article class="card">
+          <h3>Full‑Stack Development</h3>
+          <p>Frontend (React/Angular), backend (Node/Python), and cloud‑ready deployments on AWS/Azure with CI/CD.</p>
+        </article>
+        <article class="card">
+          <h3>AI Integrations</h3>
+          <p>LLMs, RAG pipelines, chatbots, and automation with OpenAI, LangChain, vector databases.</p>
+        </article>
+        <article class="card">
+          <h3>Payments & Platforms</h3>
+          <p>Secure Stripe integrations, role‑based dashboards, and real‑time event processing.</p>
+        </article>
+      </div>
     </div>
-    <div class="project">
-      <h3>FAQ Chatbot</h3>
-      <p>A custom FAQ chatbot that uses retrieval‑augmented generation to answer questions from a set of documents. Built with FastAPI and a front‑end chat UI.</p>
-      <a href="https://github.com/Geethika1234-mano/faq-chatbot" target="_blank">View Project</a>
+  </section>
+
+  <!-- Works -->
+  <section id="works" class="section">
+    <div class="container">
+      <h2 class="center mb-2">Works</h2>
+      <div class="grid projects">
+        <article class="card project">
+          <h3>AI Resume Screener</h3>
+          <p>An AI tool that analyzes resumes and matches candidates to job descriptions using NLP and embeddings. Built with Python, FastAPI, LangChain, and MongoDB.</p>
+          <p><a href="https://github.com/Geethika1234-mano/ai-resume-screener" target="_blank" rel="noreferrer noopener">View Project</a></p>
+        </article>
+        <article class="card project">
+          <h3>FAQ Chatbot</h3>
+          <p>A custom FAQ chatbot that uses retrieval‑augmented generation to answer questions from a set of documents. Built with FastAPI and a front‑end chat UI.</p>
+          <p><a href="https://github.com/Geethika1234-mano/faq-chatbot" target="_blank" rel="noreferrer noopener">View Project</a></p>
+        </article>
+      </div>
     </div>
   </section>
-  <section id="contact" class="contact">
-    <h2>Contact</h2>
-    <p>You can reach me via:</p>
-    <ul>
-      <li><a href="mailto:">Email</a></li>
-      <li><a href="https://github.com/Geethika1234-mano" target="_blank">GitHub</a></li>
-    </ul>
+
+  <!-- Notes (placeholder) -->
+  <section id="notes" class="section">
+    <div class="container">
+      <h2 class="center mb-2">Notes</h2>
+      <p class="center">Short write‑ups on things I build & learn. (Coming soon)</p>
+    </div>
   </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section">
+    <div class="container center">
+      <h2 class="mb-2">Contact</h2>
+      <p class="mb-2">You can reach me via:</p>
+      <ul class="contact-list">
+        <li><a href="mailto:geethikasew97@gmail.com">Email</a></li>
+        <li><a href="https://github.com/Geethika1234-mano" target="_blank" rel="noreferrer noopener">GitHub</a></li>
+        <li><a href="https://linkedin.com" target="_blank" rel="noreferrer noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </section>
+
   <footer>
-    <p>&copy; 2025 Geethika Sewwandi</p>
+    <div class="container">
+      <small>© 2025 Geethika Sewwandi</small>
+    </div>
   </footer>
 </body>
 </html>
